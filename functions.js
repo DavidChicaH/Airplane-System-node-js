@@ -15,7 +15,7 @@ export const addPassanger = () => {
   rl.question(chalk.bold("\n Ingresa tu cedula: "), (cedula) => {
     if (!parseInt(cedula)) {
       console.log(
-        chalk.black.bgYellow.bold("\nLa cedula debe ser un numero\n")
+        chalk.black.bgYellow.bold("\nLa cedula ingresada no es válida\n")
       );
       redeploy();
     } else {
@@ -90,18 +90,23 @@ export const getPassanger = () => {
           (passenger) => passenger.cedula === cedula
         );
 
-        passenger
-          ? console.log(
-              chalk.green("\n\n\n El pasajero "),
-              chalk.red.bold(`${passenger.nombre}`),
-              chalk.green(" se dirije con destino hacia "),
-              chalk.red.bold(`${passenger.ciudad}\n\n\n`)
-            )
-          : console.log(
-              chalk.black.bgYellow.bold("\n\n\nPasajero no encontrado\n\n\n")
-            );
+        if (passenger) {
+          console.log(
+            chalk.white("\n\n\n El pasajero "),
+            chalk.green.bold(`${passenger.nombre}`),
+            chalk.white(" se dirije con destino hacia "),
+            chalk.green.bold(`${passenger.ciudad}\n\n\n`)
+          );
 
-        redeploy();
+          rl.question("Presiona enter para regresar al menú", () => {
+            redeploy(0);
+          });
+        } else {
+          console.log(
+            chalk.black.bgYellow.bold("\n\n\nPasajero no encontrado\n\n\n")
+          );
+          redeploy();
+        }
       }
     );
   }
@@ -112,19 +117,23 @@ export const getAllPassengers = () => {
     console.log(
       chalk.black.bgYellow.bold("\n\n\nNo hay registros de pasajeros\n\n\n")
     );
+    redeploy();
   } else {
     passengers.forEach((passenger) => {
       console.log(
-        chalk.black.bgGreen.bold("CC:"),
+        chalk.black.bgGreen.bold("\n\n\nCC:"),
         `${passenger.cedula} `,
         chalk.black.bgGreen.bold("Pasajero:"),
         `${passenger.nombre} `,
         chalk.black.bgGreen.bold("Destino:"),
-        `${passenger.ciudad}, ${passenger.pais}`
+        `${passenger.ciudad}, ${passenger.pais}\n\n\n`
       );
     });
+
+    rl.question("Presiona enter para regresar al menú", () => {
+      redeploy(0);
+    });
   }
-  redeploy();
 };
 
 export const passengersPerCity = () => {
@@ -156,12 +165,12 @@ export const passengersPerCity = () => {
           );
 
           console.log(
-            chalk.green("\n\n\n Pasajeros con destino a "),
-            chalk.red.bold(`${cities[cityNumber - 1]}\n`)
+            chalk.white("\n\n\n Pasajeros con destino a "),
+            chalk.green.bold(`${cities[cityNumber - 1]}\n`)
           );
           getCityPassengers.forEach((passenger) =>
             console.log(
-              chalk.black.bgGreen.bold("Pasajero:"),
+              chalk.black.bgGreen.bold(" Pasajero:"),
               ` ${passenger.nombre} - `,
               chalk.black.bgGreen.bold("CC:"),
               ` ${passenger.cedula}`
@@ -172,7 +181,9 @@ export const passengersPerCity = () => {
               `\n Total pasajeros: ${getCityPassengers.length} \n\n\n`
             )
           );
-          redeploy();
+          rl.question("Presiona enter para regresar al menú", () => {
+            redeploy(0);
+          });
         } else {
           console.log(
             chalk.bgRed.white.bold(
@@ -215,12 +226,12 @@ export const passengersPerCountry = () => {
           );
 
           console.log(
-            chalk.green("\n\n\n Pasajeros con destino a "),
-            chalk.red.bold(`${countries[countryNumber - 1]}\n`)
+            chalk.white("\n\n\n Pasajeros con destino a "),
+            chalk.green.bold(`${countries[countryNumber - 1]}\n`)
           );
           getCountryPassengers.forEach((passenger) =>
             console.log(
-              chalk.black.bgGreen.bold("Pasajero:"),
+              chalk.black.bgGreen.bold(" Pasajero:"),
               ` ${passenger.nombre} - `,
               chalk.black.bgGreen.bold("CC:"),
               ` ${passenger.cedula}`
@@ -231,7 +242,9 @@ export const passengersPerCountry = () => {
               `\n Total pasajeros: ${getCountryPassengers.length} \n\n\n`
             )
           );
-          redeploy();
+          rl.question("Presiona enter para regresar al menú", () => {
+            redeploy(0);
+          });
         } else {
           console.log(
             chalk.bgRed.white.bold(

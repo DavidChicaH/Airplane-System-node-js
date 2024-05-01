@@ -9,14 +9,15 @@ import {
 } from "./functions.js";
 import { rl } from "./functions.js";
 
-export const redeploy = () => {
+export const redeploy = (time = 2000) => {
   setTimeout(() => {
     displayMenu();
     displayOptions();
-  }, 2000);
+  }, time);
 };
 
 const displayMenu = () => {
+  console.clear();
   console.log(chalk.green.bold.bgBlack(figlet.textSync("Airport Service")));
   console.log(chalk.bold("\nPor favor selecciona una opcion \n"));
   console.log(chalk.bold("1) ✈️  Agregar pasajero"));
